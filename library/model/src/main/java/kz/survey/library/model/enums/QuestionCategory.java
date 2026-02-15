@@ -1,0 +1,9 @@
+package kz.survey.library.model.enums;
+
+public enum QuestionCategory {
+  DIGITAL_CONSUMPTION,
+  PERCEPTION_EVALUATION,
+  PERSONAL_FOCUS_AND_WELL_BEING,
+  INTERNET_USAGE_FREQUENCY,
+  DISCUSSION_AND_SHARING_BEHAVIOR,
+}

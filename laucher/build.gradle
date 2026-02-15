@@ -1,0 +1,48 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'java'
+}
+
+bootBuildImage {
+    if (!project.hasProperty("dockerImageTag")) {
+        ext.dockerImageTag = "latest"
+    }
+
+    builder = "paketobuildpacks/builder-jammy-tiny"
+    buildpacks = [
+            "urn:cnb:builder:paketo-buildpacks/java",
+            "docker.io/paketobuildpacks/health-checker"
+    ]
+    createdDate = "now"
+    imageName = "nuraskhan/survey-backend:${dockerImageTag}"
+    environment = ["BP_NATIVE_IMAGE"             : "false",
+                   "BPE_APPEND_JAVA_TOOL_OPTIONS": " --enable-preview -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m ",
+                   "JAVA_TOOL_OPTIONS"           : " --enable-preview -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m ",
+                   "BP_HEALTH_CHECKER_ENABLED"   : "true",
+                   "BP_JVM_VERSION"              : "25"]
+}
+
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4'
+    implementation 'org.webjars:webjars-locator-core:0.59'
+
+    implementation project(':api')
+    implementation project(":library:model")
+    implementation project(":library:jooq")
+}
+tasks.bootJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+

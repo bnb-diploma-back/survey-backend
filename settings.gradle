@@ -1,0 +1,6 @@
+rootProject.name = 'survey'
+include 'library'
+include 'library:jooq'
+include 'library:model'
+include 'api'
+include 'laucher'

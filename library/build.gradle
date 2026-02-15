@@ -1,0 +1,54 @@
+plugins {
+    id("java")
+    id("maven-publish")
+    id("org.springframework.boot") version "4.0.2" apply false
+    id("io.spring.dependency-management") version "1.1.7"
+    id 'org.hibernate.orm'  version "7.2.0.Final"// IMPORTANT: Hibernate version must be the same as the one used in the parent pom!!!!!!!!!!!!!!!!
+}
+
+group = 'kz.survey'
+
+allprojects {
+    group = "kz.survey.library"
+    version = "1.0.0"
+}
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "maven-publish"
+    apply plugin: 'java-library'
+
+    java{
+        toolchain{
+            languageVersion = JavaLanguageVersion.of(25);
+        }
+    }
+
+    compileJava {
+        options.incremental = true
+    }
+
+    publishing {
+        publications {
+            library(MavenPublication) {
+                from components.java
+                versionMapping {
+                    usage('java-api') {
+                        fromResolutionOf('runtimeClasspath')
+                    }
+                    usage('java-runtime') {
+                        fromResolutionResult()
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.register("publishAll") {
+    dependsOn(subprojects.map { it.tasks.matching { it.name == "publish" } })
+}
+
+tasks.register("publishLocalAll") {
+    dependsOn(subprojects.map { it.tasks.matching { it.name == "publishLibraryPublicationToMavenLocal" } })
+}

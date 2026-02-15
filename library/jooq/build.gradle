@@ -1,0 +1,101 @@
+plugins {
+    id("nu.studer.jooq") version "8.2.3"
+}
+
+apply plugin: "io.spring.dependency-management"
+apply plugin: "org.springframework.boot"
+
+jar {
+    enabled = true
+}
+
+bootJar {
+    enabled = false
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'build/generated-sources'
+        }
+    }
+}
+
+dependencies {
+    // JOOQ versions will be managed by Spring Boot BOM
+    jooqGenerator 'org.jooq:jooq-meta-extensions-hibernate'
+    jooqGenerator 'org.jooq:jooq-meta'
+    jooqGenerator 'org.jooq:jooq'
+
+    jooqGenerator project(':library:model')
+    compileOnly project(':library:model')
+
+    runtimeOnly "org.postgresql:postgresql"
+    jooqGenerator "org.postgresql:postgresql"
+
+    api 'org.springframework.boot:spring-boot-starter-jooq'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+jooq {
+    version = dependencyManagement.importedProperties['jooq.version']
+    edition = nu.studer.gradle.jooq.JooqEdition.OSS
+    configurations {
+        main {
+            generationTool {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = 'jdbc:postgresql://localhost:5432/postgres'
+                    user = 'postgres'
+                    password = 'example'
+                }
+                generator {
+                    generate {
+                        javadoc = false
+                        keys = false
+                        records = false
+                        sequences = false
+                        sequenceFlags = false
+                        routines = false
+                        pojos = true
+                        pojosAsJavaRecordClasses = true
+                    }
+                    database {
+                        schemata {
+                            schema {
+                                inputSchema = "public"
+                            }
+                            schema {
+                                inputSchema = "survey"
+                            }
+                        }
+                    }
+
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+
+                        includes = '.*'
+                        excludes = """
+                  """
+                    }
+                    target {
+                        packageName = 'kz.survey.library.jooq.survey.ddl'
+                        directory = 'build/generated-sources'
+                    }
+                }
+            }
+        }
+    }
+}

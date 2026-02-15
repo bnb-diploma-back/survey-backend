@@ -1,0 +1,92 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "kz.survey.library",
+    "module": "jooq",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.2.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter-jooq",
+          "version": {
+            "requires": "4.0.2"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "jooq-1.0.0-plain.jar",
+          "url": "jooq-1.0.0-plain.jar",
+          "size": 33466,
+          "sha512": "bb89cddb12f706a2416ae2aed855cb1db68e1cf6bd9fe402b9086ff8608f480c59480396c1fa3f71e5a249cadeb2ea9e003b366ab11930a3c1d5fa5ee9f33f56",
+          "sha256": "c33718831c9bd0656d5767e29e51b9ff3c32037803cfdfebca5c5cef803b70be",
+          "sha1": "7e1c3c116e64a533c12f076799a4e0f40ca9f87f",
+          "md5": "991fe0df723d120f15987da967bf663c"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jooq",
+          "module": "jooq",
+          "version": {
+            "requires": "3.19.29"
+          }
+        },
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter-jooq",
+          "version": {
+            "requires": "4.0.2"
+          }
+        },
+        {
+          "group": "org.postgresql",
+          "module": "postgresql",
+          "version": {
+            "requires": "42.7.9"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "jooq-1.0.0-plain.jar",
+          "url": "jooq-1.0.0-plain.jar",
+          "size": 33466,
+          "sha512": "bb89cddb12f706a2416ae2aed855cb1db68e1cf6bd9fe402b9086ff8608f480c59480396c1fa3f71e5a249cadeb2ea9e003b366ab11930a3c1d5fa5ee9f33f56",
+          "sha256": "c33718831c9bd0656d5767e29e51b9ff3c32037803cfdfebca5c5cef803b70be",
+          "sha1": "7e1c3c116e64a533c12f076799a4e0f40ca9f87f",
+          "md5": "991fe0df723d120f15987da967bf663c"
+        }
+      ]
+    }
+  ]
+}
