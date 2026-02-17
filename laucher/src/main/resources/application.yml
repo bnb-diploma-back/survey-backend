@@ -2,16 +2,20 @@ spring:
   application:
     name: survey
   datasource:
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${JDBC_DATABASE_USERNAME:postgres}
+    password: ${JDBC_DATABASE_PASSWORD:example}
     driver-class-name: org.postgresql.Driver
   jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    show-sql: ${SPRING_JPA_SHOW_SQL:true}
     properties:
       hibernate:
         generate_statistics: true
         bytecode:
           use_reflection_optimizer: true
         show_sql: false
-    hibernate:
-      ddl-auto: none
     open-in-view: false
   config:
     import: optional:configserver:${CONFIG_SERVER:http://localhost:8889/}
@@ -24,7 +28,7 @@ spring:
     virtual:
       enabled: true
 server:
-  port: 8070
+  port: ${PORT:8070}
 
 # CORS: allowed origins for browser requests (e.g. frontend on another port)
 # Defaults allow localhost:3000, 4200, 5173, 8080

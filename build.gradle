@@ -82,4 +82,24 @@ allprojects {
         mavenLocal()
         mavenCentral()
     }
+
+    // Only :laucher has a main class; disable bootJar for all other projects
+    bootJar {
+        enabled = false
+    }
+    jar {
+        enabled = true
+    }
+}
+
+// Copy laucher boot JAR to root build/libs for Heroku Procfile
+tasks.named('build').configure {
+    dependsOn(':laucher:bootJar')
+    doLast {
+        copy {
+            from project(':laucher').tasks.getByName('bootJar')
+            into file('build/libs')
+            rename { 'survey-back.jar' }
+        }
+    }
 }
