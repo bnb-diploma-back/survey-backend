@@ -6,6 +6,12 @@ spring:
     username: ${JDBC_DATABASE_USERNAME:postgres}
     password: ${JDBC_DATABASE_PASSWORD:example}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-test-query: SELECT 1
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
   jpa:
     hibernate:
       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
@@ -17,23 +23,18 @@ spring:
           use_reflection_optimizer: true
         show_sql: false
     open-in-view: false
-  config:
-    import: optional:configserver:${CONFIG_SERVER:http://localhost:8889/}
   main:
     allow-bean-definition-overriding: true
-  cloud:
-    config:
-      fail-fast: true
   threads:
     virtual:
       enabled: true
 server:
   port: ${PORT:8070}
 
-# CORS: allowed origins for browser requests (e.g. frontend on another port)
-# Defaults allow localhost:3000, 4200, 5173, 8080
+# CORS: allowed origins for browser requests (frontend)
+# Override with CORS_ALLOWED_ORIGINS env var (comma-separated) on Heroku if needed
 cors:
-  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:8080,http://127.0.0.1:3000,http://127.0.0.1:4200,http://127.0.0.1:5173,http://127.0.0.1:8080}
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:https://survey-front-a95246160bfa.herokuapp.com,http://localhost:5173,http://localhost:8080,http://127.0.0.1:3000,http://127.0.0.1:4200,http://127.0.0.1:5173,http://127.0.0.1:8080}
 
 management:
   metrics:

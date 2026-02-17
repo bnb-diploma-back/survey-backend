@@ -25,7 +25,7 @@ public class RespondentEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "uuid")
+  @Column(name = "uuid", nullable = false)
   @Getter
   @Setter
   private UUID uuid;
@@ -35,7 +35,6 @@ public class RespondentEntity {
   private Integer age;
 
   @Getter
-  @Setter
   @Enumerated(EnumType.STRING)
   @JdbcTypeCode(SqlTypes.NAMED_ENUM)
   @Column(name = "gender", columnDefinition = "survey.gender")

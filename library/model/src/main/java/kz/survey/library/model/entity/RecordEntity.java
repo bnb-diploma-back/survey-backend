@@ -27,7 +27,7 @@ public class RecordEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "uuid")
+  @Column(name = "uuid", nullable = false)
   @Getter
   @Setter
   private UUID uuid;

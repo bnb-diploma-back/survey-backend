@@ -22,7 +22,7 @@ configurations {
 sourceSets {
     main {
         java {
-            srcDir 'build/generated-sources'
+            srcDir 'src/main/generated-jooq'
         }
     }
 }
@@ -46,6 +46,10 @@ test {
     useJUnitPlatform()
 }
 
+// Spring/JOOQ: use env vars (Heroku JDBC_* or split DB_HOST/DB_PORT/DB_NAME/DB_USER/DB_PASSWORD)
+def jdbcUrl = System.getenv('JDBC_DATABASE_URL') ?: "jdbc:postgresql://${System.getenv('DB_HOST') ?: 'localhost'}:${System.getenv('DB_PORT') ?: '5432'}/${System.getenv('DB_NAME') ?: 'postgres'}"
+def jdbcUser = System.getenv('JDBC_DATABASE_USERNAME') ?: System.getenv('DB_USER') ?: 'postgres'
+def jdbcPassword = System.getenv('JDBC_DATABASE_PASSWORD') ?: System.getenv('DB_PASSWORD') ?: 'example'
 
 jooq {
     version = dependencyManagement.importedProperties['jooq.version']
@@ -56,9 +60,9 @@ jooq {
                 logging = org.jooq.meta.jaxb.Logging.WARN
                 jdbc {
                     driver = 'org.postgresql.Driver'
-                    url = 'jdbc:postgresql://localhost:5432/postgres'
-                    user = 'postgres'
-                    password = 'example'
+                    url = jdbcUrl
+                    user = jdbcUser
+                    password = jdbcPassword
                 }
                 generator {
                     generate {
@@ -92,10 +96,15 @@ jooq {
                     }
                     target {
                         packageName = 'kz.survey.library.jooq.survey.ddl'
-                        directory = 'build/generated-sources'
+                        directory = 'src/main/generated-jooq'
                     }
                 }
             }
         }
     }
+}
+
+// Skip on Heroku/CI (no DB at build time). Run with -PrunJooqGeneration=true when schema changes.
+tasks.named('generateJooq').configure {
+    enabled = (project.findProperty('runJooqGeneration') == 'true')
 }
