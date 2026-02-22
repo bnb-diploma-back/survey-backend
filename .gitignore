@@ -1,0 +1,163 @@
+# --- Gradle ---
+.gradle/
+**/.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# --- Maven (if ever used) ---
+target/
+**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+dependency-reduced-pom.xml
+
+# --- Java ---
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.log
+hs_err_pid*
+replay_pid*
+javadoc/
+
+# --- Annotation processors / generated (non-committed) ---
+.apt_generated
+.apt_generated_tests
+**/build/generated-sources/
+**/build/generated-test-sources/
+
+# --- IDE (IntelliJ IDEA) ---
+.idea/
+**/.idea/
+*.iml
+**/*.iml
+*.ipr
+*.iws
+out/
+
+# --- IDE (Eclipse) ---
+.settings/
+.project
+.classpath
+.metadata
+.factorypath
+.springBeans
+.sts4-cache
+
+# --- IDE (VS Code) ---
+.vscode/
+*.code-workspace
+
+# --- IDE (Cursor) ---
+.cursor/
+
+# --- IDE (NetBeans) ---
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# --- OS ---
+.DS_Store
+**/.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Heroku / local env ---
+.env
+.env.local
+.env.*.local
+*.local
+.heroku/
+Procfile.dev
+
+# --- Secrets / config (do not commit) ---
+application-local.yml
+application-local.properties
+*-local.properties
+secrets/
+*.pem
+*.key
+*.jks
+*.p12
+
+# --- Docker (local data, do not commit) ---
+docker/pgdata/
+docker/redis/
+docker/**/pgdata/
+*.pid
+
+# --- Spring Boot ---
+spring-boot-devtools.properties
+
+# --- Logs & temp ---
+logs/
+**/logs/
+tmp/
+temp/
+**/tmp/
+**/temp/
+*.tmp
+*.temp
+*.swp
+*~
+*.bak
+*.backup
+*.orig
+*.rej
+
+# --- Test / coverage ---
+**/test-output/
+**/test-results/
+**/reports/
+.coverage
+htmlcov/
+jacoco/
+*.exec
+*.ec
+
+# --- H2 / local DB files ---
+*.h2.db
+*.db
+*.sqlite
+
+# --- Node (if any tooling uses it) ---
+node_modules/
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+package-lock.json.bak
+
+# --- Python (if any scripts) ---
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyo
+.Python
+venv/
+.venv/
+env/
+
+# --- Misc ---
+*.log
+*.pid
+.cache/
+**/.cache/
+*.xcuserstate
+*.xcworkspace
+xcuserdata/
+
+# --- GitHub ---
+# Uncomment if you use GitHub Actions and want to ignore local workflow caches:
+# .github/workflows/.cache/

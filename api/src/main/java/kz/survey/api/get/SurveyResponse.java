@@ -6,9 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Response with scores for each of the 8 survey dimensions.
- * Each score is a weighted average: sum(question_weight * likert) / sum(question_weight)
- * over all answers for that respondent; null if no questions have a weight for that dimension.
+ * Response with scores for each of the 8 survey dimensions (raw, normalizedPercent, tier)
+ * and overall Digital Wellbeing Index (average of 7 core dimensions, 0–100, 1 decimal).
  */
 @Data
 @NoArgsConstructor
@@ -16,19 +15,21 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SurveyResponse {
   /** 1) Life Satisfaction */
-  private Double lifeSatisfaction;
+  private DimensionScore lifeSatisfaction;
   /** 2) Digital Self-Regulation */
-  private Double digitalSelfRegulation;
+  private DimensionScore digitalSelfRegulation;
   /** 3) Online Privacy & Control */
-  private Double onlinePrivacyAndControl;
+  private DimensionScore onlinePrivacyAndControl;
   /** 4) Emotional Resilience */
-  private Double emotionalResilience;
+  private DimensionScore emotionalResilience;
   /** 5) Problematic Internet Use (PIU) / Anxiety */
-  private Double problematicInternetUseAnxiety;
+  private DimensionScore problematicInternetUseAnxiety;
   /** 6) Community Engagement */
-  private Double communityEngagement;
+  private DimensionScore communityEngagement;
   /** 7) Social Pressure */
-  private Double socialPressure;
+  private DimensionScore socialPressure;
   /** 8) Recommendation Satisfaction */
-  private Double recommendationSatisfaction;
+  private DimensionScore recommendationSatisfaction;
+  /** Average of normalizedPercent across 7 core dimensions (excl. Recommendation Satisfaction). 0–100, 1 decimal. */
+  private Double overallIndex;
 }
